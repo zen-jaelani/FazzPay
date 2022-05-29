@@ -1,7 +1,41 @@
-import React from "react";
+import React, { useState } from "react";
 import Layout from "../../components/Layout/auth";
+import Cookies from "js-cookie";
+import axios from "../../utils/axios";
+import Router from "next/router";
+import Link from "next/link";
 
 export default function Login() {
+  const [form, setForm] = useState({ email: "", password: "" });
+  const [isVisible, setIsVisible] = useState(false);
+  const [isError, setIsError] = useState(false);
+
+  const handleChangeForm = ({ target }) => {
+    console.log(target.name);
+    setForm({ ...form, [target.name]: target.value });
+  };
+  console.log(form);
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    try {
+      const result = await axios.post("/auth/login", form);
+      console.log(result.data.data.pin);
+      if (result.data.data.pin) {
+        Cookies.set("token", result.data.data.token);
+        Cookies.set("id", result.data.data.id);
+        Router.push("/dashboard");
+      } else {
+        Router.push({
+          pathname: "/create-pin",
+          query: { id: result.data.data.id },
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      setIsError(true);
+    }
+  };
+
   return (
     <Layout
       head="Login"
@@ -14,13 +48,21 @@ export default function Login() {
       wherever you are. Desktop, laptop, mobile phone? we cover all
       of that for you!"
     >
-      <form className="mt-5 ">
-        <div className="input-group my-5  border-bottom ">
+      <form className="mt-5 pb-5" onSubmit={handleSubmit}>
+        <div
+          className={`input-group my-5  border-bottom ${
+            !isError ? (form.email ? "border-primary" : "") : "border-danger"
+          }`}
+        >
           <span
             className="input-group-text border-0 bg-white ps-0 text-black-50"
             id="basic-addon1"
           >
-            <i className="bi bi-envelope fs-3"></i>
+            <i
+              className={`bi bi-envelope fs-3 ${
+                !isError ? (form.email ? "textMain" : "") : "text-danger"
+              } `}
+            ></i>
           </span>
           <input
             type="text"
@@ -28,32 +70,58 @@ export default function Login() {
             placeholder="Enter your e-mail"
             aria-label="Username"
             aria-describedby="basic-addon1"
+            name="email"
+            onChange={(event) => handleChangeForm(event)}
+            value={form.email}
+            required
           />
         </div>
-        <div className="input-group border-0 border-bottom mt-lg-5">
+        <div
+          className={`input-group border-0 border-bottom mt-lg-5 ${
+            !isError ? (form.password ? "border-primary" : "") : "border-danger"
+          }`}
+        >
           <span
-            className="input-group-text border-0 bg-white ps-0 text-black-50"
+            className="input-group-text border-0 bg-white ps-0 text-black-50 "
             id="basic-addon1"
           >
-            <i className="bi bi-lock fs-3"></i>
+            <i
+              className={`bi bi-lock fs-3 ${
+                !isError ? (form.password ? "textMain" : "") : "text-danger"
+              }`}
+            ></i>
           </span>
           <input
-            type="password"
+            type={isVisible ? "text" : "password"}
             className="form-control border-0 fs-5"
             placeholder="Enter your password"
             aria-label="Username"
             aria-describedby="basic-addon1"
+            name="password"
+            onChange={(event) => handleChangeForm(event)}
+            value={form.password}
+            required
           />
-          <span className="input-group-text bg-white border-0 text-black-50">
-            <i className="bi bi-eye"></i>
-            <i className="bi bi-eye-slash"></i>
+          <span
+            className="input-group-text bg-white border-0 text-black-50 fs-3"
+            onClick={() =>
+              isVisible ? setIsVisible(false) : setIsVisible(true)
+            }
+          >
+            {isVisible ? (
+              <i className={`bi bi-eye-slash `}></i>
+            ) : (
+              <i className={`bi bi-eye `}></i>
+            )}
           </span>
         </div>
         <p className="text-end mt-3">Forgot password ?</p>
-        <p className="invisible text-danger">Email or Password Invalid</p>
-        <button className="btn-lg w-100 bgMain">Login</button>
+        <p className=" text-danger mt-5">
+          {isError ? "Email or Password Invalid" : ""}
+        </p>
+        <button className="btn-lg w-100 bgMain mt-5">Login</button>
         <p className="my-5  text-center">
-          Don`t have an account? Let`s <span>Sign Up</span>
+          Don`t have an account? Let`s <Link href="/register">Sign Up</Link>
         </p>
       </form>
     </Layout>
