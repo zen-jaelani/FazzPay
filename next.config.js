@@ -15,7 +15,15 @@ const nextConfig = {
         source: "/register",
         destination: "/auth/register",
       },
+      {
+        source: "/create-pin",
+        destination: "/auth/pin",
+      },
     ];
+  },
+
+  images: {
+    domains: ["res.cloudinary.com"],
   },
 };
 
