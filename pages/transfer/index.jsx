@@ -7,14 +7,46 @@ import { getAllUser } from "stores/action/user";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useRouter } from "next/router";
 import Spinner from "react-bootstrap/Spinner";
+import cookies from "next-cookies";
+import axios from "axios";
 
-function Transfer() {
+export async function getServerSideProps(context) {
+  const dataCookies = cookies(context);
+  const params = context.query;
+  const page = !params?.page ? 1 : params.page;
+  const limit = params?.limit || 7;
+  const search = params?.search || "";
+
+  const result = await axios
+    .get(
+      `${process.env.URL_BACKEND}/user?page=${page}&limit=${limit}&search=${search}&sort=firstName ASC`,
+      {
+        headers: {
+          Authorization: `Bearer ${dataCookies.token}`,
+        },
+      }
+    )
+    .then((res) => {
+      return res;
+    })
+    .catch((err) => {
+      return [];
+    });
+  console.log(result);
+  return {
+    props: {
+      data: result.data?.data || [],
+      pageInfo: result.data?.pagination || {},
+    },
+  };
+}
+
+function Transfer(props) {
   const dispatch = useDispatch();
   const router = useRouter();
-
-  const user = useSelector((state) => state.user);
-  const { data } = user;
-  console.log(pageInfo);
+  console.log(props);
+  //   const user = useSelector((state) => state.user);
+  //   const { data } = user;
 
   const [pagination, setPagination] = useState({
     page: 1,
@@ -24,31 +56,41 @@ function Transfer() {
     hasMore: true,
   });
   const [pageInfo, setPageInfo] = useState({});
-  console.log();
+
+  //   useEffect(() => {
+  //     getData();
+  //   }, []);
 
   useEffect(() => {
-    getData();
-  }, []);
-
-  useEffect(() => {
-    getData();
+    router.push(
+      `/transfer?limit=${pagination.limit}&search=${pagination.search}`
+    );
   }, [pagination]);
 
-  const getData = () => {
-    try {
-      dispatch(getAllUser(pagination))
-        .then((res) => setPageInfo(res.value.data.pagination))
-        .catch((err) => console.log(err));
-    } catch (error) {
-      console.log(error);
+  //   const getData = async () => {
+  //     try {
+  //       dispatch(getAllUser(pagination))
+  //         .then((res) => setPageInfo(res.value.data.pagination))
+  //         .catch((err) => console.log(err));
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
+
+  const search = (event) => {
+    if (event.key === "Enter") {
+      console.log(event.target.value);
+      setPagination({ ...pagination, search: event.target.value });
     }
   };
-  console.log(pageInfo ? pageInfo.page : "nothing");
+  console.log(
+    pagination.limit <= (pageInfo ? props.pageInfo.totalData : Number.MAX_VALUE)
+  );
   return (
     <Layout page="transfer" head="Transfer">
       <div
         className="bg-white rounder shadow p-3 overflow-auto"
-        style={{ maxHeight: "inherit", position: "" }}
+        style={{ maxHeight: "inherit", position: "", height: "100vh" }}
         id="scrollableDiv"
       >
         <div className="">
@@ -67,6 +109,7 @@ function Transfer() {
                 placeholder="Search receiver here"
                 aria-label="Username"
                 aria-describedby="basic-addon1"
+                onKeyDown={(e) => search(e)}
               ></input>
             </div>
           </div>
@@ -78,7 +121,7 @@ function Transfer() {
                 limit: pagination.limit + 4,
                 hasMore:
                   pagination.limit <=
-                  (pageInfo ? pageInfo.totalData : Number.MAX_VALUE),
+                  (pageInfo ? props.pageInfo.totalData : Number.MAX_VALUE),
               })
             }
             scrollThreshold={0.9}
@@ -95,9 +138,9 @@ function Transfer() {
             }
             scrollableTarget="scrollableDiv"
           >
-            <div className="rounder px-2 w-100">
-              {Array.isArray(data) &&
-                data.map((value) => (
+            <div className="rounder px-2 w-100 pb-5">
+              {Array.isArray(props.data) &&
+                props.data.map((value) => (
                   <div
                     key={value.id}
                     onClick={() =>
@@ -124,4 +167,5 @@ function Transfer() {
   );
 }
 
-export default PrivateRoute(Transfer);
+// export default PrivateRoute(Transfer);
+export default Transfer;
