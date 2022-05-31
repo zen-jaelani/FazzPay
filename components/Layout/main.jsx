@@ -5,6 +5,8 @@ import { topup } from "stores/action/transaction";
 import { useRouter } from "next/router";
 import { Modal, Button, Form } from "react-bootstrap";
 import { useDispatch } from "react-redux";
+import { logout } from "stores/action/auth";
+import Cookie from "js-cookie";
 
 export default function MainLayout(props) {
   const dispatch = useDispatch();
@@ -12,6 +14,16 @@ export default function MainLayout(props) {
 
   const router = useRouter();
 
+  const handleLogout = () => {
+    dispatch(logout())
+      .then((res) => {
+        Cookie.remove("token");
+        Cookie.remove("id");
+        localStorage.clear();
+        router.push("/");
+      })
+      .catch((err) => console.log(err));
+  };
   return (
     <>
       <Head>
@@ -24,7 +36,10 @@ export default function MainLayout(props) {
         </div>
         <div className="container-fluid d-flex mt-lg-5 m-0 p-0">
           <div className="container row mx-auto m-0 p-0">
-            <div className="col-2  d-none d-lg-flex bg-white shadow rounder pt-5 align-items-start p-0">
+            <div
+              className="col-2  d-none d-lg-flex bg-white shadow rounder pt-5 align-items-start p-0"
+              style={{ position: "relative" }}
+            >
               <div
                 className="nav flex-column nav-pills me-3 "
                 id="v-pills-tab"
@@ -84,7 +99,7 @@ export default function MainLayout(props) {
 
                 <button
                   className={`nav-link text-start ${
-                    props?.page == "" ? "active" : ""
+                    props?.page == "Profile" ? "active" : ""
                   }`}
                   id="v-pills-home-tab"
                   data-bs-toggle="pill"
@@ -93,9 +108,26 @@ export default function MainLayout(props) {
                   role="tab"
                   aria-controls="v-pills-home"
                   aria-selected="true"
+                  onClick={() => router.push("/profile")}
                 >
                   <i className="bi bi-person me-3 fs-4"></i>
                   <span>Profile</span>
+                </button>
+
+                <button
+                  className={`nav-link text-start `}
+                  id="v-pills-home-tab"
+                  data-bs-toggle="pill"
+                  data-bs-target="#v-pills-home"
+                  type="button"
+                  role="tab"
+                  aria-controls="v-pills-home"
+                  aria-selected="true"
+                  style={{ position: "absolute", bottom: "30px" }}
+                  onClick={handleLogout}
+                >
+                  <i className="bi bi-box-arrow-right me-3 fs-4"></i>
+                  <span>Logout</span>
                 </button>
               </div>
             </div>
@@ -125,7 +157,9 @@ export default function MainLayout(props) {
         onHide={() => setModalShow(false)}
         submit={(amount) =>
           dispatch(topup({ amount }))
-            .then((res) => console.log(res))
+            .then(
+              (res) => (window.location.href = res.value.data.data.redirectUrl)
+            )
             .catch((err) => alert(err))
         }
       />
