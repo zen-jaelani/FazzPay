@@ -8,15 +8,17 @@ export default function MainLayout(props) {
       <Head>
         <title>{props.head}</title>
       </Head>
-
-      <div className="bgSecondary ">
-        <div className="container rounder-top shadow-lg m-0 p-0 mx-auto my-lg-5 row overflow-hidden">
+      <div className="bgSecondary " style={{ minHeight: "100vh" }}>
+        <div className="container rounder-top shadow-lg m-0 p-0 mx-auto my-lg-5 row overflow-hidden bg-white">
           <div className="col-12 col-lg-6 p-0">
             <Banner />
           </div>
-          <div className="col-12 col-lg-6 authMain bg-white h-100">
+          <div
+            className="col-12 col-lg-6 authMain bg-white h-100"
+            style={{ minHeight: "75vh" }}
+          >
             <div className="row ps-2 ps-lg-5">
-              <div className="col-12 text-center col-lg-9">
+              <div className="col-12 text-center text-lg-start col-lg-9 mt-3">
                 <h3 className="mt-5  d-block d-lg-none">{props.title}</h3>
                 <h6 className="mt-3 text-black-50 d-block d-lg-none lh-base">
                   {props.subTitle}
