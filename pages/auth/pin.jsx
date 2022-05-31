@@ -1,21 +1,27 @@
 import React, { useState } from "react";
 import Layout from "../../components/Layout/auth";
 import axios from "../../utils/axios";
-import Router from "next/router";
+import Router, { useRouter } from "next/router";
 import Link from "next/link";
 import Pin from "react-pin-field";
 
-export default function Login() {
+export default function CreatePin() {
+  const router = useRouter();
   const [pin, setPin] = useState("");
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      //   const result = await axios.post("/auth/login");
+      console.log(Number(pin));
+      const result = await axios.patch(`/user/pin/${router.query.id}`, {
+        pin: Number(pin),
+      });
+      console.log("object");
+      console.log(result);
     } catch (error) {
       console.log(error);
     }
   };
-
+  console.log(`/user/pin/${router.query.id}`);
   return (
     <Layout
       head="PIN"
