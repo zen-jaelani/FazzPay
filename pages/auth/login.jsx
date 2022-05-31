@@ -20,9 +20,9 @@ export default function Login() {
     try {
       const result = await axios.post("/auth/login", form);
       console.log(result.data.data.pin);
+      Cookies.set("token", result.data.data.token);
+      Cookies.set("id", result.data.data.id);
       if (result.data.data.pin) {
-        Cookies.set("token", result.data.data.token);
-        Cookies.set("id", result.data.data.id);
         Router.push("/dashboard");
       } else {
         Router.push({
