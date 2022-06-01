@@ -38,7 +38,7 @@ export default function Home() {
           <div className=" d-flex">
             <div>
               <Image
-                src={"/Group 49.png"}
+                src="/Group 49.png"
                 alt=""
                 width={463}
                 height={852}
@@ -351,7 +351,7 @@ export default function Home() {
             <div className=" d-flex">
               <div>
                 <Image
-                  src={"/Group 49.png"}
+                  src="/Group 49.png"
                   alt=""
                   width={463}
                   height={892}
@@ -412,7 +412,7 @@ export default function Home() {
               <i className="bi bi-arrow-left me-5 bg-white p-3 rounded-circle "></i>
             </div>
             <div className="bg-white p-4 rounder ">
-              <Image src={"/favicon.ico"} width={50} height={50}></Image>
+              <Image src="/favicon.ico" width={50} height={50}></Image>
               <h4 className="fw-nold mt-3">Next Vercel</h4>
               <p className="mt-3">Developer</p>
               <p>

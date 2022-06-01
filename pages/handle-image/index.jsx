@@ -16,7 +16,7 @@ export default function HandleImage() {
       <h1>with next image</h1>
       <div className="text-start">
         <Image
-          src={"/vercel.svg"}
+          src="/vercel.svg"
           alt="nextImage"
           width={100}
           height={100}
@@ -25,7 +25,7 @@ export default function HandleImage() {
       </div>
       <hr />
       <Image
-        src={"/vercel.svg"}
+        src="/vercel.svg"
         alt="nextImage"
         width={100}
         height={100}
