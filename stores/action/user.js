@@ -23,17 +23,17 @@ export const checkPin = (pin) => {
   };
 };
 
-export const updateProfile = (form) => {
+export const updateProfile = (id, form) => {
   return {
     type: "UPDATE_PROFILE",
-    payload: axios.patch(`user/profile`, form),
+    payload: axios.patch(`user/profile/${id}`, form),
   };
 };
 
-export const updateImage = (form) => {
+export const updateImage = (id, form) => {
   return {
     type: "UPDATE_IMAGE",
-    payload: axios.patch(`user/image`, form),
+    payload: axios.patch(`user/image/${id}`, form),
   };
 };
 
