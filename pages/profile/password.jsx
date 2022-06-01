@@ -66,11 +66,11 @@ function Password() {
         style={{ height: "100vh", maxHeight: "inherit", position: "" }}
       >
         <h3 className="my-3">Change Password</h3>
-        <h5 className="text-black-50 w-50">
+        <h5 className="text-black-50 col-12 col-lg-6">
           You must enter your current password and then type your new password
           twice.
         </h5>
-        <div className="mt-5 w-50 container text-start">
+        <div className="mt-5 col-12 col-lg-6 container text-start">
           <div
             className={`input-group border-0 border-bottom mt-lg-5 ${
               !isError

@@ -41,12 +41,12 @@ function Phone() {
           </div>
           <div className="rounder w-auto">
             <div>
-              <p className="mt-5 w-50 text-black-50">
+              <p className="mt-5 col-12 col-lg-6 text-black-50">
                 Add at least one phone number for the transfer ID so you can
                 start transfering your money to another user.
               </p>
               <div className="text-center container row">
-                <dir className="col-6 mx-auto mt-5">
+                <dir className="col-12 col-lg-6 mx-auto mt-5">
                   <div
                     className={` mx-auto text-center input-group my-5  border-bottom opacity-50 
                     ${input ? "border-primary" : ""}`}

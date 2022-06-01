@@ -79,19 +79,19 @@ function ChangePin() {
         className="bg-white rounder shadow p-3 overflow-auto"
         style={{ height: "100vh", maxHeight: "inherit", position: "" }}
       >
-        <h3 className="my-3">Change ChangePin</h3>
-        <h5 className="text-black-50 w-50">
+        <h3 className="my-3">Change PIN</h3>
+        <h5 className="text-black-50 col-12 col-lg-6">
           {isChecked
             ? "Type your new 6 digits security PIN to use in Zwallet."
             : "Enter your current 6 digits Zwallet PIN below to continue to the next steps."}
         </h5>
-        <div className="mt-5 pt-5 w-50  mx-auto text-start">
+        <div className="mt-5 pt-5 col-12 col-lg-6 mx-auto text-start">
           <center className="mb-5 mt-5">
             <Pin
               className={`btn btn-lg border  text-black p-0 py-2 me-0 me-lg-2 pin ${
                 pin.length == 6 ? "border-primary" : ""
               }`}
-              style={{ width: "70px" }}
+              style={{ width: "55px" }}
               length={6}
               validate="0123456789"
               inputMode="numeric"

@@ -79,15 +79,12 @@ function TransferTo() {
                 className="mt-3 shadow-sm"
               />
             </div>
-            <div>
+            <form onSubmit={handleSubmit}>
               <p className="mt-5">
                 Type the amount you want to transfer and then press continue to
                 the next steps.
               </p>
-              <form
-                className="text-center container row"
-                onSubmit={handleSubmit}
-              >
+              <div className="text-center container col-12 col-lg-6">
                 <input
                   type="number"
                   className={`mt-5 border-0 form-control textMain fs-1 text-center fw-bold`}
@@ -104,7 +101,7 @@ function TransferTo() {
                   Rp.{user.balance?.toLocaleString()} Available
                 </p>
                 <div
-                  className={` mx-auto text-center input-group my-5  border-bottom opacity-50 
+                  className={`mx-auto text-center input-group my-5  border-bottom opacity-50 
                   ${toTransfer.notes ? "border-primary" : ""}
                   `}
                 >
@@ -120,7 +117,7 @@ function TransferTo() {
                   </span>
                   <input
                     type="text"
-                    className="form-control border-0 fs-5"
+                    className="form-control border-0 fs-5 "
                     placeholder="Add some notes"
                     aria-label="Username"
                     aria-describedby="basic-addon1"
@@ -128,11 +125,11 @@ function TransferTo() {
                     onChange={(event) => handleChangeForm(event)}
                   />
                 </div>
-                <div className="text-end">
-                  <button className="btn btn-lg bgMain ">Continue</button>
-                </div>
-              </form>
-            </div>
+              </div>
+              <div className="text-lg-end pt-5 text-center">
+                <button className="btn btn-lg bgMain ">Continue</button>
+              </div>
+            </form>
           </div>
         </div>
       </div>
