@@ -1,5 +1,4 @@
-.transaction-card {
-  background-color: white;
+.cardItem {
   box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.027);
 }
 
@@ -9,4 +8,22 @@
   color: #6379f4;
   border-left: 5px solid #6379f4;
   border-radius: 0%;
+}
+
+.mainDiv {
+  max-height: 100vh;
+}
+
+@media (min-width: 768px) {
+  .transaction-card {
+    background-color: white;
+    box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.027);
+  }
+  .cardItem {
+    box-shadow: none;
+  }
+
+  .mainDiv {
+    max-height: 678px;
+  }
 }
