@@ -14,6 +14,7 @@ import { checkPin } from "stores/action/user";
 
 function Confirmation() {
   const dispatch = useDispatch();
+  const router = useRouter();
   const [modalShow, setModalShow] = React.useState(false);
   const { query } = useRouter();
   const [toast, setToast] = React.useState(false);
@@ -28,8 +29,25 @@ function Confirmation() {
     };
     console.log(data);
     dispatch(transfer(data))
-      .then((res) => alert("success"))
-      .catch((err) => alert(err));
+      .then((res) => {
+        router.push({
+          pathname: "/transfer/status",
+          query: {
+            ...query,
+            transactionId: res.value.data.data?.id,
+            status: "success",
+          },
+        });
+      })
+      .catch((err) => {
+        router.push({
+          pathname: "/transfer/status",
+          query: {
+            ...query,
+            status: "failed",
+          },
+        });
+      });
   };
 
   return (
@@ -40,7 +58,7 @@ function Confirmation() {
       >
         <div className="">
           <div className="">
-            <p>Transfer Money</p>
+            <p>Transfer To</p>
           </div>
           <div className="rounder w-auto">
             <div>
