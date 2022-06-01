@@ -12,6 +12,7 @@ export default function Login() {
 
   const handleChangeForm = ({ target }) => {
     console.log(target.name);
+    setIsError(false);
     setForm({ ...form, [target.name]: target.value });
   };
   console.log(form);
@@ -115,11 +116,15 @@ export default function Login() {
             )}
           </span>
         </div>
-        <p className="text-end mt-3">Forgot password ?</p>
-        <p className=" text-danger mt-5">
+        <div className="mt-3  text-end">
+          <Link href={"/auth/forgot"} className="" color={""}>
+            Forgot password ?
+          </Link>
+        </div>
+        <p className=" text-danger my-4 my-lg-5 text-center">
           {isError ? "Email or Password Invalid" : ""}
         </p>
-        <button className="btn-lg w-100 bgMain mt-5">Login</button>
+        <button className="btn-lg w-100 bgMain mt-">Login</button>
         <p className="my-5  text-center">
           Don`t have an account? Let`s <Link href="/register">Sign Up</Link>
         </p>
