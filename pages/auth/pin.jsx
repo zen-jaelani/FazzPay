@@ -17,6 +17,7 @@ export default function CreatePin() {
       });
       console.log("object");
       console.log(result);
+      router.push("/auth/success");
     } catch (error) {
       console.log(error);
     }
@@ -46,7 +47,7 @@ export default function CreatePin() {
         ></Pin>
       </div>
       <button
-        className="btn btn-lg mt-5 bgMain w-100"
+        className="btn btn-lg mb-5 col-11 bgMain "
         onClick={handleSubmit}
         disabled={pin.length == 6 ? false : true}
       >
