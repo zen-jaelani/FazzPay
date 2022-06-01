@@ -131,10 +131,7 @@ export default function MainLayout(props) {
                 </button>
               </div>
             </div>
-            <div
-              className="col-12 col-lg-10 d-flex row m-0 p-0 px-lg-3 "
-              style={{ maxHeight: "678px" }}
-            >
+            <div className="col-12 col-lg-10 d-flex row m-0 p-0 px-lg-3 mainDiv">
               {props.children}
             </div>
           </div>
