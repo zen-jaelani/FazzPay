@@ -74,7 +74,30 @@ function Home() {
   const options = {
     plugins: {},
     responsive: true,
-    scales: {},
+    scales: {
+      y: {
+        ticks: {
+          callback: function (value, index, ticks) {
+            return "Rp." + value.toLocaleString();
+          },
+          color: "#999999",
+        },
+        grid: {
+          color: "rgba(228, 228, 228, 0.2)",
+          borderColor: "rgba(228, 228, 228, 0.2)",
+        },
+      },
+      x: {
+        ticks: {
+          color: "#999999",
+          padding: 20,
+        },
+        grid: {
+          color: "rgba(228, 228, 228, 0.2)",
+          borderColor: "rgba(228, 228, 228, 0.2)",
+        },
+      },
+    },
     layout: {
       padding: {
         top: 50,
@@ -169,7 +192,7 @@ function Home() {
                     right={`${v.amount}`}
                     image={`${v.image}`}
                     type={v.type}
-                    className={"mt-2 ps-2"}
+                    className={"mt-2 ps-2 cardItem"}
                   />
                 </div>
               ))
