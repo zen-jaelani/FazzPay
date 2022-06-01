@@ -11,34 +11,39 @@ import cookies from "next-cookies";
 import axios from "axios";
 
 export async function getServerSideProps(context) {
-  const dataCookies = cookies(context);
-  const params = context.query;
-  const page = !params?.page ? 1 : params.page;
-  const limit = params?.limit || 7;
-  const search = params?.search || "";
+  try {
+    const dataCookies = cookies(context);
+    const params = context.query;
+    const page = !params?.page ? 1 : params.page;
+    const limit = params?.limit || 7;
+    const search = params?.search || "";
 
-  const result = await axios
-    .get(
+    const result = await axios.get(
       `${process.env.URL_BACKEND}/user?page=${page}&limit=${limit}&search=${search}&sort=firstName ASC`,
       {
         headers: {
           Authorization: `Bearer ${dataCookies.token}`,
         },
       }
-    )
-    .then((res) => {
-      return res;
-    })
-    .catch((err) => {
-      return [];
-    });
-  console.log(result);
-  return {
-    props: {
-      data: result.data?.data || [],
-      pageInfo: result.data?.pagination || {},
-    },
-  };
+    );
+    console.log(result);
+    return {
+      props: {
+        data: result.data?.data || [],
+        pageInfo: result.data?.pagination || {},
+      },
+    };
+  } catch (error) {
+    return {
+      redirect: {
+        destination:
+          error.response.status === 403
+            ? "/auth/login"
+            : `/error?msg=${error.response.data.msg}`,
+        permanent: false,
+      },
+    };
+  }
 }
 
 function Transfer(props) {
@@ -95,7 +100,13 @@ function Transfer(props) {
       >
         <div className="">
           <div className="">
-            <p>Search Receiver</p>
+            <p>
+              <i
+                onClick={() => router.back()}
+                className="bi bi-arrow-left me-2"
+              ></i>
+              Search Receiver
+            </p>
             <div className="input-group mb-3">
               <span
                 className="input-group-text border-0 bg-light"
