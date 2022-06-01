@@ -16,7 +16,11 @@ export default function Transaction(props) {
           >
             {props.image ? (
               <Image
-                src={`/Group 57.png`}
+                src={
+                  props.image && props.image !== "null"
+                    ? `${process.env.IMAGE_URL}${props.image}`
+                    : "https://res.cloudinary.com/qxtlp/image/upload/v1651069637/default-profile.jpg"
+                }
                 alt=""
                 style={{ objectFit: "cover" }}
                 layout="fill"
@@ -25,7 +29,7 @@ export default function Transaction(props) {
               ""
             )}
           </div>
-          <div className="d-flex flex-grow-1 justify-content-between">
+          <div className="d-flex flex-grow-1 justify-content-between ms-2">
             <div className="">
               <h5 className="fw-bold">{props.leftTop} </h5>
               <p className="mb-1 fw-light">{props.leftBottom}</p>
@@ -33,7 +37,7 @@ export default function Transaction(props) {
 
             <div className="mt-2">
               {props.right ? (
-                props.type == "topup" ? (
+                props.type == "topup" || props.type == "accept" ? (
                   <p className=" fs-5 fs-lg-1 fw-bold text-success">
                     +Rp.{Number(props.right).toLocaleString()}
                   </p>
