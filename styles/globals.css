@@ -42,7 +42,7 @@ a {
   color: white !important;
 }
 .bgSecondary {
-  background-color: #f9fbfe;
+  background-color: #f9fbfe !important;
 }
 
 .textMain {
@@ -50,7 +50,7 @@ a {
 }
 
 .rounder {
-  border-radius: 20px !important;
+  border-radius: 0px !important;
 }
 .rounder-top {
   border-bottom-left-radius: 2;
@@ -81,10 +81,17 @@ div > .shadow-sm {
   padding-top: 100px !important;
   font-size: 14px;
 }
+
+.dropdown-toggle::after {
+  display: none !important;
+}
 @media (min-width: 768px) {
   .rounder-top,
   .rounder-bottom {
     border-radius: 20px;
+  }
+  .rounder {
+    border-radius: 20px !important;
   }
 }
 
