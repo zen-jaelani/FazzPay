@@ -22,3 +22,10 @@ export const histoy = ({ page, limit, filter } = {}) => {
     ),
   };
 };
+
+export const exportTransaction = (id) => {
+  return {
+    type: "EXPORT",
+    payload: axios.get(`export/transaction/${id}`),
+  };
+};
