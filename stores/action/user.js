@@ -37,6 +37,13 @@ export const updateImage = (id, form) => {
   };
 };
 
+export const deleteImage = (id) => {
+  return {
+    type: "DELETE_IMAGE",
+    payload: axios.delete(`user/image/${id}`),
+  };
+};
+
 export const changePassword = (id, form) => {
   return {
     type: "UPDATE_PASSWORD",

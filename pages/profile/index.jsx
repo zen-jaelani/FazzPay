@@ -2,13 +2,19 @@ import React, { useEffect, useState } from "react";
 import Layout from "components/Layout/main";
 import PrivateRoute from "components/privateRoute";
 import { useDispatch, useSelector } from "react-redux";
-import { getUser, updateImage, updateProfile } from "stores/action/user";
+import {
+  deleteImage,
+  getUser,
+  updateImage,
+  updateProfile,
+} from "stores/action/user";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import Cookie from "js-cookie";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import { logout } from "stores/action/auth";
+import { Dropdown, DropdownButton } from "react-bootstrap";
 
 function Profile() {
   const dispatch = useDispatch();
@@ -65,6 +71,16 @@ function Profile() {
       .catch((err) => console.log(err));
   };
 
+  const handleDelete = (event) => {
+    event.stopPropagation();
+    dispatch(deleteImage(Cookie.get("id")))
+      .then((res) => {
+        alert("image deleted");
+        getData();
+      })
+      .catch((err) => alert(err));
+  };
+
   return (
     <Layout page="Profile" head="Profile">
       <div
@@ -72,19 +88,37 @@ function Profile() {
         style={{ maxHeight: "inherit", height: "100vh" }}
       >
         <div className="text-center">
-          <label htmlFor="imageInput" className="invisible">
-            <Image
-              src={
-                data.image
-                  ? `${process.env.IMAGE_URL}${data.image}`
-                  : "https://res.cloudinary.com/qxtlp/image/upload/v1651069637/default-profile.jpg"
-              }
-              width="150"
-              height="150"
-              alt=""
-              className="visible"
-            ></Image>
-          </label>
+          <DropdownButton
+            variant=""
+            title={
+              <Image
+                src={
+                  data.image
+                    ? `${process.env.IMAGE_URL}${data.image}`
+                    : "https://res.cloudinary.com/qxtlp/image/upload/v1651069637/default-profile.jpg"
+                }
+                width="100"
+                height="100"
+                alt=""
+                className="visible"
+              ></Image>
+            }
+            id="input-group-dropdown-1"
+          >
+            <Dropdown.Item className="text-center">
+              <label htmlFor="imageInput" className="invisible ">
+                <span className="visible" onClick={(e) => e.stopPropagation()}>
+                  Edit
+                </span>
+              </label>
+            </Dropdown.Item>
+            <Dropdown.Item className="text-center">
+              <span className="visible" onClick={(e) => handleDelete(e)}>
+                Delete
+              </span>
+            </Dropdown.Item>
+          </DropdownButton>
+
           <input
             type="file"
             accept="image/*"
