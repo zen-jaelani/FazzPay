@@ -8,7 +8,7 @@ import Link from "next/link";
 export default function Forgot() {
   const [form, setForm] = useState({
     email: "",
-    linkDirect: "http://localhost:3000/auth/",
+    linkDirect: "https://zazzpay.netlify.app/auth",
   });
   const [isError, setIsError] = useState(false);
 
