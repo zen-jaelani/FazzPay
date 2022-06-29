@@ -3,10 +3,10 @@ import Head from "next/head";
 import Navbar from "../../components/Navbar";
 import { topup } from "stores/action/transaction";
 import { useRouter } from "next/router";
-import { Modal, Button, Form } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import { logout } from "stores/action/auth";
 import Cookie from "js-cookie";
+import Topup from "../../components/topup";
 
 export default function MainLayout(props) {
   const dispatch = useDispatch();
@@ -34,7 +34,7 @@ export default function MainLayout(props) {
         <div className="d-none d-lg-block">
           <Navbar />
         </div>
-        <div className="container-fluid d-flex mt-lg-5 m-0 p-0">
+        <div className="container-fluid d-flex my-lg-5 m-0 p-0">
           <div className="container row mx-auto m-0 p-0">
             <div
               className="col-2  d-none d-lg-flex bg-white shadow rounder pt-5 align-items-start p-0"
@@ -131,14 +131,15 @@ export default function MainLayout(props) {
                 </button>
               </div>
             </div>
+
             <div className="col-12 col-lg-10 d-flex row m-0 p-0 px-lg-3 mainDiv">
               {props.children}
             </div>
           </div>
         </div>
         <footer
-          className="container-fluid bgMain w-100 pt-4 mt-auto d-none d-lg-block"
-          style={{ height: "68px", position: "absolute", bottom: 0 }}
+          className="container-fluid bgMain w-100 p-4  d-none d-lg-block "
+          style={{ marginTop: "auto" }}
         >
           <div className="container d-flex justify-content-between">
             <p>2020 Zwallet. All right reserved.</p>
@@ -149,7 +150,7 @@ export default function MainLayout(props) {
           </div>
         </footer>
       </div>
-      <MyVerticallyCenteredModal
+      <Topup
         show={modalShow}
         onHide={() => setModalShow(false)}
         submit={(amount) =>
@@ -161,41 +162,5 @@ export default function MainLayout(props) {
         }
       />
     </>
-  );
-}
-
-function MyVerticallyCenteredModal(props) {
-  const [amount, setAmount] = React.useState(0);
-  console.log(amount);
-  return (
-    <Modal
-      {...props}
-      size=""
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-    >
-      <Modal.Header closeButton className="border-0">
-        <Modal.Title id="contained-modal-title-vcenter">Topup </Modal.Title>
-      </Modal.Header>
-      <Modal.Body className="">
-        <h6 className="text-black-50">
-          Enter the amount of money, and click submit
-        </h6>
-        <div className="d-flex justify-content-center">
-          <Form.Control
-            type="number"
-            size=""
-            placeholder="_____________________________"
-            className="text-center pt-3 text-black-50 fs-3 my-5 underlineInput"
-            onChange={({ target }) => setAmount(target.value)}
-          />
-        </div>
-      </Modal.Body>
-      <Modal.Footer className="border-0">
-        <Button onClick={() => props.submit(amount)} className="p-2 px-4">
-          Submit
-        </Button>
-      </Modal.Footer>
-    </Modal>
   );
 }
