@@ -1,3 +1,7 @@
+.containerMain {
+  max-height: 100vh;
+}
+
 .authMain {
   border-top-left-radius: 30px;
   border-top-right-radius: 30px;
@@ -20,6 +24,9 @@ svg {
 }
 
 @media (min-width: 768px) {
+  .containerMain {
+    max-height: fit-content;
+  }
   .authMain {
     height: fit-content;
     box-shadow: none;

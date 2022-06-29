@@ -5,7 +5,7 @@ import Card from "../../components/Card/transaction";
 import PrivateRoute from "../../components/privateRoute";
 import Cookies from "js-cookie";
 import { getUser, dashboard } from "stores/action/user";
-import { histoy } from "stores/action/transaction";
+import { histoy, topup } from "stores/action/transaction";
 import { useDispatch } from "react-redux";
 
 import {
@@ -18,12 +18,16 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 import Link from "next/link";
+import { useRouter } from "next/router";
+import Topup from "components/topup";
 
 function Home() {
   const dispatch = useDispatch();
+  const router = useRouter();
   const [user, setUser] = useState({});
   const [dataDashboard, setDataDashboard] = useState({});
   const [dataHistory, setDataHistory] = useState([]);
+  const [modalShow, setModalShow] = useState(false);
 
   useEffect(() => {
     getData();
@@ -128,11 +132,17 @@ function Home() {
           <div className="col-3  text-end mt-4 mt-lg-0 ">
             <i className="bi bi-bell fs-1 d-block d-lg-none"></i>
 
-            <button className="d-none d-lg-block btn btn-lg btn-light w-100 rounder">
+            <button
+              className="d-none d-lg-block btn btn-lg btn-light w-100 rounder"
+              onClick={() => router.push("/transfer")}
+            >
               <span className="fs-3 text-secondary">&uarr;</span>
               &nbsp; Transfer
             </button>
-            <button className="d-none d-lg-block btn btn-lg border-white bg-light w-100 mt-3 rounder">
+            <button
+              className="d-none d-lg-block btn btn-lg border-white bg-light w-100 mt-3 rounder"
+              onClick={() => setModalShow(true)}
+            >
               <i className="bi bi-plus-lg fs-3 text-secondary"></i> Top Up
             </button>
           </div>
@@ -140,18 +150,24 @@ function Home() {
       </div>
 
       <div className="text-center mt-4 d-block d-lg-none">
-        <button className="btn btn-lg btn-light me-4 ">
+        <button
+          className="btn btn-lg btn-light me-4 "
+          onClick={() => router.push("/transfer")}
+        >
           <span className="fs-1 text-primary">&uarr;</span>
           &nbsp; Transfer
         </button>
-        <button className="btn btn-lg btn-light">
+        <button
+          className="btn btn-lg btn-light"
+          onClick={() => setModalShow(true)}
+        >
           <i className="bi bi-plus-lg fs-1 text-primary"></i> Top Up
         </button>
       </div>
 
       <div
         className="col-7 bg-white shadow rounder mt-4 d-none d-lg-block "
-        style={{ height: "468px" }}
+        style={{ minHeight: "468px" }}
       >
         <div className="row p-3">
           <div className="col-6">
@@ -174,7 +190,7 @@ function Home() {
 
       <div className="col-12 col-lg-5 mt-4 " style={{ minHeight: "468px" }}>
         <div
-          className="transaction-card rounder py-3"
+          className="transaction-card rounder pt-4 h-100"
           style={{ minHeight: "468px" }}
         >
           <div className="mx-3 px-2 d-flex justify-content-between">
@@ -199,6 +215,17 @@ function Home() {
             : ""}
         </div>
       </div>
+      <Topup
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+        submit={(amount) =>
+          dispatch(topup({ amount }))
+            .then(
+              (res) => (window.location.href = res.value.data.data.redirectUrl)
+            )
+            .catch((err) => alert(err))
+        }
+      />
     </Layout>
   );
 }

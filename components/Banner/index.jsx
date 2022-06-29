@@ -48,7 +48,7 @@ export default function Banner() {
               position: "absolute",
               bottom: "50px",
               left: "80px",
-              width: "500px",
+              width: "75%",
             }}
           >
             <h3>App that Covering Banking Needs.</h3>

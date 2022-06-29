@@ -8,7 +8,7 @@ export default function MainLayout(props) {
       <Head>
         <title>{props.head}</title>
       </Head>
-      <div className="bgSecondary" style={{ maxHeight: "100vh" }}>
+      <div className="bgSecondary containerMain">
         <div
           className="container rounder-top shadow-lg m-0 p-0 mx-auto my-lg-5 row overflow-hidden bg-white"
           style={{ maxHeight: "inherit" }}
