@@ -34,7 +34,7 @@ export default function Forgot() {
       you a password reset link."
       dSubTitle="To reset your password, you must type your e-mail and we will send a link to your email and you will be directed to the reset password screens."
     >
-      <form className="mt-5 pb-5" onSubmit={handleSubmit}>
+      <form className="mt-5" onSubmit={handleSubmit}>
         <div
           className={`input-group my-5  border-bottom ${
             !isError ? (form.email ? "border-primary" : "") : "border-danger"

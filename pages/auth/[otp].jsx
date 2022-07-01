@@ -56,7 +56,7 @@ export default function Reset() {
       Password In a Minutes.."
       dSubTitle="Now you can create a new password for your Zwallet account. Type your password twice so we can confirm your new passsword."
     >
-      <form className="mt-5 pb-5" onSubmit={handleSubmit}>
+      <form className="mt-5" onSubmit={handleSubmit}>
         <div
           className={`input-group border-0 border-bottom mt-lg-5 ${
             !isError

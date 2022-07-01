@@ -49,7 +49,7 @@ export default function Login() {
       wherever you are. Desktop, laptop, mobile phone? we cover all
       of that for you!"
     >
-      <form className="mt-5 pb-5" onSubmit={handleSubmit}>
+      <form className="mt-5" onSubmit={handleSubmit}>
         <div
           className={`input-group my-5  border-bottom ${
             !isError ? (form.email ? "border-primary" : "") : "border-danger"
